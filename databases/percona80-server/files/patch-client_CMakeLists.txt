@@ -1,0 +1,70 @@
+--- client/CMakeLists.txt.orig	2023-06-07 08:36:44 UTC
++++ client/CMakeLists.txt
+@@ -31,10 +31,13 @@ INCLUDE_DIRECTORIES(SYSTEM ${MY_XLINE_INCLUDE_DIR})
+ 
+ ADD_SUBDIRECTORY(base)
+ ## Subdirectory for mysqlpump code.
++IF(WITHOUT_SERVER)
+ ADD_SUBDIRECTORY(dump)
+ ## Subdirectory for mysql_migrate_keyring code.
+ ADD_SUBDIRECTORY(migrate_keyring)
++ENDIF()
+ 
++IF(NOT WITHOUT_CLIENTLIBS)
+ INCLUDE_DIRECTORIES(
+   ${CMAKE_CURRENT_SOURCE_DIR}/include
+ )
+@@ -50,6 +53,7 @@ MYSQL_ADD_EXECUTABLE(mysql
+   ${CMAKE_CURRENT_SOURCE_DIR}/common/user_registration.cc
+   LINK_LIBRARIES perconaserverclient client_base ${MY_XLINE_LIBRARY}
+   )
++ENDIF()
+ 
+ IF(NOT WITHOUT_SERVER)
+   MYSQL_ADD_EXECUTABLE(mysql_upgrade
+@@ -58,6 +62,7 @@ IF(NOT WITHOUT_SERVER)
+     )
+ ENDIF()
+ 
++IF(NOT WITHOUT_SERVER)
+ MYSQL_ADD_EXECUTABLE(mysqltest
+   mysqltest.cc
+   mysqltest/error_names.cc
+@@ -77,7 +82,9 @@ MYSQL_ADD_EXECUTABLE(mysqltest
+ IF (WITH_COREDUMPER)
+   TARGET_LINK_LIBRARIES(mysqltest coredumper)
+ ENDIF()
++ENDIF()
+ 
++IF(WITHOUT_SERVER)
+ MYSQL_ADD_EXECUTABLE(mysqlcheck
+   check/mysqlcheck.cc
+   check/mysqlcheck_core.cc
+@@ -284,7 +291,9 @@ ENDIF()
+ 
+ TARGET_COMPILE_DEFINITIONS(mysqlbinlog PRIVATE DISABLE_PSI_MUTEX)
+ TARGET_INCLUDE_DIRECTORIES(mysqlbinlog PRIVATE ${CMAKE_SOURCE_DIR}/sql)
++ENDIF()
+ 
++IF(WITHOUT_SERVER)
+ MYSQL_ADD_EXECUTABLE(mysqladmin
+   mysqladmin.cc
+   multi_factor_passwordopt-vars.cc
+@@ -299,6 +308,9 @@ MYSQL_ADD_EXECUTABLE(mysql_config_editor
+   mysql_config_editor.cc
+   LINK_LIBRARIES perconaserverclient
+   )
++ENDIF()
++
++IF(NOT WITHOUT_SERVER)
+ MYSQL_ADD_EXECUTABLE(mysql_secure_installation
+   mysql_secure_installation.cc
+   LINK_LIBRARIES perconaserverclient
+@@ -309,6 +321,7 @@ MYSQL_ADD_EXECUTABLE(mysql_ssl_rsa_setup
+   path.cc
+   LINK_LIBRARIES mysys
+   )
++ENDIF()
+ 
+ # "WIN32" also covers 64 bit. "echo" is used in some files below "mysql-test/".
+ IF(WIN32)
