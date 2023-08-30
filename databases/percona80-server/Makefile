@@ -3,11 +3,11 @@ DISTVERSION=	8.0.33-25
 PORTREVISION?=		0
 CATEGORIES=		databases
 MASTER_SITES=	https://downloads.percona.com/downloads/Percona-Server-8.0/Percona-Server-${DISTVERSION}${DISTVERSIONSUFFIX}/source/tarball/:percona \
-		SF/boost/boost/1.59.0:boost
+		SF/boost/boost/1.77.0:boost
 PKGNAMESUFFIX?=	80-server
 DISTNAME=	percona-server-${DISTVERSION}
 DISTFILES=	percona-server-${DISTVERSION}${EXTRACT_SUFX}:percona \
-		boost_1_59_0${EXTRACT_SUFX}:boost
+		boost_1_77_0${EXTRACT_SUFX}:boost
 
 MAINTAINER=		dvl@FreeBSD.org
 COMMENT?=		Multithreaded SQL database (server)
@@ -80,7 +80,7 @@ CMAKE_ARGS+=	-DINSTALL_LAYOUT=FREEBSD \
 		-DINSTALL_SHAREDIR="share" \
 		-DINSTALL_SUPPORTFILESDIR="share/mysql" \
 		-DMYSQL_KEYRINGDIR="${ETCDIR}/keyring" \
-		-DWITH_BOOST="${WRKSRC}/boost" \
+		-DWITH_BOOST="${WRKDIR}/boost_1_77_0" \
 		-DWITH_SYSTEM_LIBS=1 \
 		-DWITH_EDITLINE=system \
 		-DWITH_LIBEVENT=system \
@@ -92,7 +92,8 @@ CMAKE_ARGS+=	-DINSTALL_LAYOUT=FREEBSD \
 		-DWITH_SSL=system \
 		-DWITH_AUTHENTICATION_FIDO=1 \
 		-DBUILD_BUNDLED_ZLIB=0 \
-		-DBUILD_BUNDLED_LZ4=0
+		-DBUILD_BUNDLED_LZ4=0 \
+		-DWITH_PERCONA_AUTHENTICATION_LDAP=0
 
 # The Mroonga, RocksDB, and TokuDB storage engines are disabled.
 # Mroonga is only buildable on little endian archs.
@@ -141,8 +142,8 @@ MMAN1=		ibd2sdi.1 innochecksum.1 my_print_defaults.1 myisam_ftdump.1 myisamchk.1
 		mysqld_safe.1 mysqlrouter_passwd.1 mysqlrouter_plugin_info.1 mysqlrouter.1
 MMAN8=		mysqld.8
 
-CMAKE_ARGS+=	-DWITH_EMBEDDED_SERVER="ON"
-CMAKE_ARGS+=	-DWITHOUT_CLIENTLIBS="ON"
+CMAKE_ARGS+=	-DWITH_EMBEDDED_SERVER=1
+CMAKE_ARGS+=	-DWITHOUT_CLIENTLIBS=1
 # Disable unit tests, it fails on !amd64 and <13.0 due to c++17 rules
 CMAKE_ARGS+=	-DWITH_UNIT_TESTS="OFF"
 
