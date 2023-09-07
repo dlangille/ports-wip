@@ -1,4 +1,4 @@
-TIMESTAMP = 1694112129
+TIMESTAMP = 1694117190
 SHA256 (icinga-icingadb-v1.1.1_GH0.tar.gz) = 8f4246765dc364917170905e38b01c62a6c44eab7d333c131fc46691a47c150a
 SIZE (icinga-icingadb-v1.1.1_GH0.tar.gz) = 3868785
 SHA256 (VividCortex-ewma-v1.2.0_GH0.tar.gz) = 2f26521a9207b91dfbca3d28e5545bc11cb098888ecf3e9ba8e5936387b06a33
@@ -17,8 +17,8 @@ SHA256 (dgryski-go-rendezvous-9f7001d12a5f_GH0.tar.gz) = 29584550745fd4b8fce2e2f
 SIZE (dgryski-go-rendezvous-9f7001d12a5f_GH0.tar.gz) = 1699
 SHA256 (fatih-color-v1.13.0_GH0.tar.gz) = 326ff785bc0cb5171c17be2a65959e83ee7889ba39412ba4c53c062e2df3ffec
 SIZE (fatih-color-v1.13.0_GH0.tar.gz) = 10826
-SHA256 (go-redis-redis-v8.11.5_GH0.tar.gz) = 759f661163df84782dd950716428b374cdbbab221f47b6fb4df4e52975291a49
-SIZE (go-redis-redis-v8.11.5_GH0.tar.gz) = 168176
+SHA256 (redis-go-redis-v8.11.5_GH0.tar.gz) = 759f661163df84782dd950716428b374cdbbab221f47b6fb4df4e52975291a49
+SIZE (redis-go-redis-v8.11.5_GH0.tar.gz) = 168176
 SHA256 (go-sql-driver-mysql-v1.7.1_GH0.tar.gz) = c6aaf1309cbeabdc43414a1230257b8943800643c581a3e2211d1efd5495a9c2
 SIZE (go-sql-driver-mysql-v1.7.1_GH0.tar.gz) = 95747
 SHA256 (go-yaml-yaml-v3.0.1_GH0.tar.gz) = cf05411540d3e6ef8f1fd88434b34f94cedaceb540329031d80e23b74540c4e5

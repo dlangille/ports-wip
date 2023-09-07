@@ -24,7 +24,7 @@ GH_TUPLE=	VividCortex:ewma:v1.2.0:vividcortex_ewma/vendor/github.com/VividCortex
 		davecgh:go-spew:v1.1.1:davecgh_go_spew/vendor/github.com/davecgh/go-spew \
 		dgryski:go-rendezvous:9f7001d12a5f:dgryski_go_rendezvous/vendor/github.com/dgryski/go-rendezvous \
 		fatih:color:v1.13.0:fatih_color/vendor/github.com/fatih/color \
-		go-redis:redis:v8.11.5:go_redis_redis_v8/vendor/github.com/go-redis/redis/v8 \
+		redis:go-redis:v8.11.5:go_redis_redis_v8/vendor/github.com/redis/go-redis/v8 \
 		go-sql-driver:mysql:v1.7.1:go_sql_driver_mysql/vendor/github.com/go-sql-driver/mysql \
 		go-yaml:yaml:v3.0.1:go_yaml_yaml/vendor/gopkg.in/yaml.v3 \
 		goccy:go-yaml:v1.11.0:goccy_go_yaml/vendor/github.com/goccy/go-yaml \
@@ -50,6 +50,8 @@ GH_TUPLE=	VividCortex:ewma:v1.2.0:vividcortex_ewma/vendor/github.com/VividCortex
 		uber-go:zap:v1.25.0:uber_go_zap/vendor/go.uber.org/zap \
 		vbauerster:mpb:v6.0.4:vbauerster_mpb_v6/vendor/github.com/vbauerster/mpb/v6
 
+WRKSRC_go_redis_redis_v8=	go-redis-8.11.5
+
 NO_BUILD=	yes
 NO_ARCH=	yes
 
@@ -62,12 +64,12 @@ OPTIONS_DEFAULT=	MYSQL PGSQL
 PGSQL_USE=	PHP=pdo_pgsql,pgsql
 MYSQL_USE=	PHP=mysqli,pdo_mysql
 
-do-build:
-	@( cd ${WRKSRC}/${PORTNAME} ; \
-		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build ; \
-		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build stdiscosrv; \
-		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build strelaysrv; \
-		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build strelaypoolsrv; \
-		)
+#do-build:
+#	@( cd ${WRKSRC}/${PORTNAME} ; \
+#		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build ; \
+#		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build stdiscosrv; \
+#		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build strelaysrv; \
+#		${SETENV} ${MAKE_ENV} ${GO_ENV} GOPROXY=off ${GO_CMD} run build.go -version v${DISTVERSION} -no-upgrade build strelaypoolsrv; \
+#		)
 
 .include <bsd.port.mk>
