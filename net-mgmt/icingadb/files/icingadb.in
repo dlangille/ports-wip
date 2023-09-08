@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# PROVIDE: icingadb
+# REQUIRE: SERVERS mysql postgresql
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# icingadb_enable:	Set to NO by default.
+#			Set it to YES to enable icingadb
+# icingadb_user:	The user account used to run the daemon.
+#			Default: %%ICINGA2USER%%
+# icingadb_group:	The group account used to run the daemon.
+#			Default: %%ICINGA2GROUP%%
+# icingadb_pid:		Path of the pid file.
+#			Default /var/run/icingadb/icingadb.pid
+# icingadb_daemonflags:	Flags passed to daemon(8), overwrite this to use eg syslog 
+# 			Default "-o /var/log/icinga2/icingadb.log"
+#
+
+. /etc/rc.subr
+
+name=icingadb
+rcvar="${name}_enable"
+
+load_rc_config $name
+
+: ${icingadb_enable:="NO"}
+: ${icingadb_user:="%%ICINGA2USER%%"}
+: ${icingadb_group:="%%ICINGA2GROUP%%"}
+: ${icingadb_pid:="/var/run/icingadb/icingadb.pid"}
+: ${icingadb_daemonflags:="-o /var/log/$name/$name.log"}
+
+pidfile="$icingadb_pid"
+procname="%%PYTHON%%"
+command="/usr/sbin/daemon"
+
+start_precmd=icingadb_precmd
+
+icingadb_precmd()
+{
+	[ -f /var/log/icinga2/$name.log ]         || install -g $librenms_group -o $librenms_user -m 644 /dev/null /var/log/icinga2/$name.log
+}
+
+command_args="$icingadb_daemonflags -p $pidfile -f -o $procname %%PREFIX%%/sbin/$name -c %%PREFIX%%/etc/icinga2/icingadb.yml"
+
+run_rc_command "$1"

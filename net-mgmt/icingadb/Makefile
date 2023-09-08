@@ -2,7 +2,6 @@ PORTNAME=	icingadb
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.1.1
 CATEGORIES=	net-mgmt www
-PKGNAMESUFFIX=	${PHP_PKGNAMESUFFIX}
 
 MAINTAINER=	dvl@FreeBSD.org
 COMMENT=	Publish, synchronize, and visualize Icinga data
@@ -13,12 +12,10 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules
 
+USE_RC_SUBR=	icingadb
+
 GO_MODULE=	github.com/icinga/icingadb
-
-GO_TARGET=	./cmd/ipfs:ipfs-go
-
-NO_BUILD=	yes
-NO_ARCH=	yes
+GO_TARGET=      ./cmd/icingadb
 
 PLIST_SUB=	WWWGRP=${WWWGRP} \
 		WWWOWN=${WWWOWN}
@@ -31,12 +28,28 @@ MYSQL_USE=	PHP=mysqli,pdo_mysql
 
 PLIST_SUB=	PORTNAME=${PORTNAME}
 
-do-build:
-	@( cd ${WRKSRC}/cmd/${PORTNAME} ; \
-	   ${GO_CMD} build ; \
-	)
+# As copied from net-mgmt/icinga2
+ICINGA2USER?=	icinga
+ICINGA2GROUP?=	icinga
+USERS=		${ICINGA2USER}
+GROUPS=		${ICINGA2GROUP}
 
-do-install:
+SUB_LIST=	ICINGA2GROUP=${ICINGA2GROUP} \
+		ICINGA2USER=${ICINGA2USER}
+
+
+
+
+post-patch:
+	@${REINPLACE_CMD} -e 's|%%PREFIX|${PREFIX}|g' ${WRKSRC}/pkg/config/config.go
+
+#do-build:
+#	@( cd ${WRKSRC}/cmd/${PORTNAME} ; \
+#	   ${GO_CMD} build ; \
+#	)
+
+post-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/cmd/${PORTNAME}/${PORTNAME} ${STAGEDIR}${PREFIX}/sbin/
+#	${INSTALL_SCRIPT} ${WRKDIR}/icingadb ${STAGEDIR}${PREFIX}/etc/rc.d/
 
 .include <bsd.port.mk>
