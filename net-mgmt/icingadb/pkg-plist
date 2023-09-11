@@ -1,1 +1,7 @@
 bin/%%PORTNAME%%
+%%EXAMPLESDIR%%/schema/pgsql/upgrades/1.1.1.sql
+%%EXAMPLESDIR%%/schema/pgsql/schema.sql
+%%EXAMPLESDIR%%/schema/mysql/schema.sql
+%%EXAMPLESDIR%%/schema/mysql/upgrades/1.1.1.sql
+%%EXAMPLESDIR%%/schema/mysql/upgrades/1.0.0.sql
+%%EXAMPLESDIR%%/schema/mysql/upgrades/1.0.0-rc2.sql

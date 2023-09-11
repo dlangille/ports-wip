@@ -35,4 +35,8 @@ GO_TARGET=	./cmd/icingadb
 post-patch:
 	@${REINPLACE_CMD} -e 's|%%PREFIX|${PREFIX}|g' ${WRKSRC}/pkg/config/config.go
 
+post-install:
+	${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
+	(cd ${WRKSRC} && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
+
 .include <bsd.port.mk>
