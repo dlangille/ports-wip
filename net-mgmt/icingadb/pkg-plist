@@ -1,4 +1,5 @@
 bin/%%PORTNAME%%
+@sample(root,wheel,0640) etc/%%PORTNAME%%/config.yml.sample
 %%EXAMPLESDIR%%/schema/pgsql/upgrades/1.1.1.sql
 %%EXAMPLESDIR%%/schema/pgsql/schema.sql
 %%EXAMPLESDIR%%/schema/mysql/schema.sql

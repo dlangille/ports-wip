@@ -1,6 +1,7 @@
 PORTNAME=	icingadb
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.1.1
+PORTREVISION=	1
 CATEGORIES=	net-mgmt
 
 MAINTAINER=	dvl@FreeBSD.org
@@ -37,6 +38,8 @@ post-patch:
 
 post-install:
 	${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
+	${MKDIR} ${STAGEDIR}${ETCDIR}
 	(cd ${WRKSRC} && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
+	${INSTALL_DATA} ${WRKSRC}/config.example.yml ${STAGEDIR}${ETCDIR}/config.yml.sample
 
 .include <bsd.port.mk>
