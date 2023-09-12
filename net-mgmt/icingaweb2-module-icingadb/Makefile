@@ -1,4 +1,4 @@
-PORTNAME=	icingadb-web
+PORTNAME=	icingaweb2-module-icingadb
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.0.2
 CATEGORIES=	net-mgmt www
@@ -16,11 +16,12 @@ RUN_DEPENDS=	icingadb>0:net-mgmt/icingadb \
 		icinga-php-library${PHP_PKGNAMESUFFIX}>=0.9:net-mgmt/icinga-php-library@${PHP_FLAVOR} \
 		icinga-php-thirdparty${PHP_PKGNAMESUFFIX}>=0.11.0:net-mgmt/icinga-php-thirdparty@${PHP_FLAVOR}
 
-USES=		php:build,web,flavors shebangfix
+USES=		php:web,flavors shebangfix
 USE_PHP=	curl dom json xml
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	icinga
+GH_PROJECT=	icingadb-web
 
 NO_BUILD=	yes
 NO_ARCH=	yes
@@ -41,6 +42,8 @@ PDF_RUN_DEPENDS=	${PHPBASE}/lib/php/${PHP_EXT_DIR}/imagick.so:graphics/pecl-imag
 
 PGSQL_USE=	PHP=pdo_pgsql,pgsql
 MYSQL_USE=	PHP=mysqli,pdo_mysql
+
+WWWDIR?=	${PREFIX}/www/icingaweb2/modules/${PORTNAME:C/^.*-//}
 
 post-patch:
 #	${REINPLACE_CMD} 's%\(/etc/icingaweb2\)%${PREFIX}\1%g' \
