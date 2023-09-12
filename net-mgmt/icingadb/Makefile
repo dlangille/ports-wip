@@ -1,7 +1,7 @@
 PORTNAME=	icingadb
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.1.1
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	net-mgmt
 
 MAINTAINER=	dvl@FreeBSD.org
@@ -32,6 +32,8 @@ GH_PROJECT=	icingadb
 
 GO_MODULE=	github.com/icinga/icingadb
 GO_TARGET=	./cmd/icingadb
+
+SUB_LIST+=	PREFIX=${PREFIX}
 
 post-patch:
 	@${REINPLACE_CMD} -e 's|%%PREFIX|${PREFIX}|g' ${WRKSRC}/pkg/config/config.go
